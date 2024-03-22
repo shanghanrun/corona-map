@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>다음 지도 API</title>
+</head>
+
+<body>
+	<div id="map" style="width:80%;height:80vh;"></div>
+
+	<script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=223643fe9ed8201f948f2827b4cd4a00"></script>
+	<script>
+		let lat = 37.56;
+		let lon = 126.97;
+		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+			mapOption = {
+				center: new kakao.maps.LatLng(37.57169, 126.9764), // 지도의 중심좌표
+				level: 4, // 지도의 확대 레벨
+				mapTypeId: kakao.maps.MapTypeId.ROADMAP // 지도종류
+			};
+
+		// 지도를 생성한다 
+		var map = new kakao.maps.Map(mapContainer, mapOption);
+
+
+		let data =[
+			[37.57169, 126.9764, '광화문'],
+			[37.5691, 126.9786, '청계천'],
+			[37.5759, 126.9768, '경복궁'],
+			[37.5744, 126.9822, '우정공원']
+		]
+
+		data.forEach((item)=>{
+			// 지도에 마커를 생성하고 표시한다
+			var marker = new kakao.maps.Marker({
+				position: new kakao.maps.LatLng(item[0], item[1]), // 마커의 좌표
+				map: map // 마커를 표시할 지도 객체
+			});
+
+			// 마커 위에 표시할 인포윈도우를 생성한다
+			var infowindow = new kakao.maps.InfoWindow({
+				content: `<div style="padding:5px;">${item[2]}</div>` // 인포윈도우에 표시할 내용
+			});
+
+			// 인포윈도우를 지도에 표시한다
+			infowindow.open(map, marker);
+		})
+
+
+		
+	</script>
+</body>
+
+</html>
